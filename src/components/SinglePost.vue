@@ -1,25 +1,27 @@
 <script setup>
-import { computed, emit } from "vue";
+import { computed } from "vue";
 
-let del = function (id) {
-  emit("delPost", id)
-}
+// const emit=defineEmits("delPost")
+
+// let del = function (id) {
+//   console.log(id);
+//   emit("delPost", id)
+// }
 const props = defineProps({
   post: Object,
 });
-
 const snippet = computed(() => {
-  return props.post.body.substring(0, 100) + "...";
+  return props.post.body+ "...";
 });
 </script>
 
 <template>
   <div class="post">
-    <input type="checkbox" @click="del(post.id)">
+    <!-- <input type="checkbox"> -->
     <router-link :to="{ name: 'Details', params: { id: post.id } }">
       <h3>{{ post.title }}</h3>
     </router-link>
-    <p>{{ snippet }}</p>
+    <!-- <p v-html="snippet"></p> -->
     <span v-for="tag in post.tags" :key="tag">#{{ tag }}</span>
     <div>发表于{{post.current_time}}</div>
   </div>
