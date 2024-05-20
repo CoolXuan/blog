@@ -33,7 +33,7 @@ tags.value = [...tagSet];
 
 .tag-cloud h3 {
   border-bottom: 1px solid #eee;
-  padding: 16px 8px;
+  padding: 6px 8px;
   color: #444;
 }
 

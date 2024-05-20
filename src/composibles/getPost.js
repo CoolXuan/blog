@@ -2,12 +2,10 @@ import { ref } from "vue";
 import axios from 'axios'
 const getPost = (id) => {
     const post = ref({});
-
     const load = async () => {
         try {
-            let { data } = await axios("http://localhost:3003/posts/" + id)
-            console.log("post",data);
-            post.value = data
+            let data  = await axios.get("/api/post/" + id)
+            post.value = data.data
         } catch (error) {
             console.log(error)
         }

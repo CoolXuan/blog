@@ -32,5 +32,9 @@ const options= {
     },
     placeholder: "编辑您的内容...",
     theme: "snow",
+    // syntax: {
+    //     highlight: text => {
+    //         return hljs.highlightAuto(text).value; // 这里就是代码高亮需要配置的地方
+    //     }
 }
 export default options

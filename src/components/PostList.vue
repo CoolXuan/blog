@@ -1,38 +1,47 @@
 <template>
   <div class="post-list">
-    <div v-for="post in posts" :key="post.id">
-      <SinglePost :post="post" />
+    <div name="imc" v-for="post in posts" :key="post[0]">
+      <SinglePost :post="post" @dblclick="delPost(post[0])" />
     </div>
   </div>
 </template>
 <script setup>
 import SinglePost from "./SinglePost.vue";
-// import delPosts from '../composibles/delPosts'
 import axios from 'axios'
-let xxx = defineProps({
+let prop = defineProps({
   posts: { type: Array },
 });
-// function del(id) {
-//   console.log("xxx", xxx.posts);
-//   console.log("del", id);
-//   xxx.posts.forEach(function (item) {
-//     //   //返回符合条件的数组
-//     // if (item.id===id) {
-//     //   const data = await axios("http://localhost:3003/posts", id);
-//     //   if (data.status === 201) {
-//     //     router.push("/");
-//     //   }
-//     // }
-
-//   })
-//   //   console.log(arr);
-
-// }
+let delPost = async function (id) {
+  prop.posts=await axios.delete("/api/posts/"+id);
+  location.reload()
+}
 
 </script>
 
 
 
-<style>
+<style scoped>
+.imc-enter-from {
+  opacity: 0;
+}
 
+.imc-enter-to {
+  opacity: 1;
+}
+
+.imc-leave-from {
+  opacity: 1;
+}
+
+.imc-leave-to {
+  opacity: 0;
+}
+
+.imc-enter-active {
+  transition: opacity 5s ease;
+}
+
+.imc-leave-active {
+  transition: opacity 5s ease;
+}
 </style>

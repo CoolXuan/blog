@@ -2,7 +2,7 @@
   <div class="create">
     <form @submit.prevent="handleSubmit">
       <label for="title">标题</label>
-      <input type="text" v-model="title" required />
+      <input type="text" v-model="title" required  />
       <label for="body">内容</label>
       <QuillEditor  style="height: 300px; margin-bottom: 10px" content-type="html" v-model:content= "content" :toolbar="options.modules.toolbar" />
      标签<input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
@@ -21,6 +21,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { ref, onMounted, reactive } from "vue";
 import axios from "axios";
 import options from './editorjs/quilOptions.js'
+// import 'highlight.js/styles/monokai-sublime.css'
 import { useRouter } from "vue-router";
 // import { titleConfig } from './editorjs/titleConfig.js' // 富文本文本提示
 
@@ -29,7 +30,7 @@ const content = ref('')
 const tags = ref([]);
 const tag = ref("");
 const current_time = ref("");
-// const router = useRouter();
+const router = useRouter();
 // const editorOption = reactive({})
 
 
@@ -72,31 +73,34 @@ const handleSubmit = async () => {
     title: title.value,
     body: content.value,
     tags: tags.value,
-    current_time: current_time.value
+    current_time: current_time.value,
+    author:sessionStorage.getItem("userName")
   };
-
-  const data = await axios.post("http://localhost:3003/posts", post);
-
-  // if (data.status === 201) {
-  //   router.push("/");
-  // }
+console.log(post);
+  const data = await axios.post("/api/posts", post);
+  console.log(data.data);
+  if (data.data === 'submit-success') {
+    router.push("/");
+  }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 form {
   max-width: 1000px;
   margin: 0 auto;
-  text-align: left;
+  // text-align: left;
 }
 
 input,
 textarea {
   display: block;
   margin: 10px 0;
-  width: 100%;
+  width: 50%;
   box-sizing: border-box;
   padding: 10px;
-  border: 1px solid #eee;
+  border: 3px solid rgb(30, 53, 223);
+  border-radius: 5px;
+  background-color: rgb(136, 74, 74,0);
 }
 
 textarea {
@@ -112,9 +116,10 @@ label {
 }
 
 button {
+  border-radius: 5px;
   display: block;
   margin-top: 30px;
-  background: #ff8800;
+  background: #ff00e1;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -134,7 +139,9 @@ button {
   border-radius: 20px;
   font-size: 14px;
 }
-
+.create{
+  padding-left: 10px;
+}
 .vue-quill-editor {
   .quill-editor {
     line-height: normal;

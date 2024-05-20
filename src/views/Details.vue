@@ -2,10 +2,8 @@
 import getPost from "../composibles/getPost";
 import Spinner from "../components/Spinner.vue";
 import { useRoute } from "vue-router";
-
 const route = useRoute();
 const { post, load } = getPost(route.params.id);
-
 load();
 
 const props = defineProps({
@@ -15,9 +13,9 @@ const props = defineProps({
 
 <template>
   <div class="post" v-if="post">
-    <h3>{{ post.title }}</h3>
-    <p class="pre" v-html="post.body"></p>
-    <span>发表于：{{post.current_time}}</span>
+    <h3>{{ post[0][1] }}</h3>
+    <p class="pre" v-html="post[0][2]"></p>
+    <span>发表于：{{post[0][4]}}</span>
   </div>
   <div v-else>
     <Spinner />
